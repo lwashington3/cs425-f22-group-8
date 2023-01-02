@@ -1,7 +1,7 @@
 DROP FUNCTION IF EXISTS statement;
 DROP FUNCTION IF EXISTS pending_transactions;
 
-CREATE OR REPLACE FUNCTION statement(account INT, month INT, year INT)
+CREATE OR REPLACE FUNCTION statement(account UUID, month INT, year INT)
     RETURNS TABLE(day timestamp,
                   transaction_amount DOUBLE PRECISION,
                   account_balance DOUBLE PRECISION,
@@ -19,7 +19,7 @@ END
 $$ LANGUAGE plpgsql;
 
 
-CREATE OR REPLACE FUNCTION pending_transactions(account INT)
+CREATE OR REPLACE FUNCTION pending_transactions(account UUID)
     RETURNS TABLE(day timestamp,
                   transaction_amount DOUBLE PRECISION,
                   account_balance DOUBLE PRECISION,
@@ -32,5 +32,5 @@ END
 $$ LANGUAGE plpgsql;
 
 
--- SELECT * FROM pending_transactions(1);
--- SELECT * FROM statement(1, 11, 2022);
+-- SELECT * FROM pending_transactions('c61f5951-c69e-47c4-8fb6-ac13f800a4a4');
+-- SELECT * FROM statement('c61f5951-c69e-47c4-8fb6-ac13f800a4a4', 12, 2022);

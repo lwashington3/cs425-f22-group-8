@@ -1,3 +1,5 @@
+CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+
 CREATE TYPE DirectionEnum AS ENUM('N', 'E', 'S', 'W');
 CREATE TYPE BankRole AS ENUM('Teller', 'Loan Shark', 'Manager');
 CREATE TYPE AccountType AS ENUM('Checkings', 'Savings');
@@ -5,7 +7,7 @@ CREATE TYPE TransactionType AS ENUM('Deposit', 'Withdrawal', 'Transfer');
 
 
 CREATE TABLE Addresses(
-    id SERIAL PRIMARY KEY NOT NULL,
+    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     number INT NOT NULL,
     direction DirectionEnum NOT NULL,
     street_name TEXT NOT NULL,
@@ -17,44 +19,44 @@ CREATE TABLE Addresses(
 
 
 CREATE TABLE Branch(
-    id SERIAL PRIMARY KEY NOT NULL,
+    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     name TEXT NOT NULL,
-    address INT REFERENCES Addresses(id) NOT NULL
+    address UUID REFERENCES Addresses(id) NOT NULL
 );
 
 
 CREATE TABLE Employee(
-    id SERIAL PRIMARY KEY NOT NULL,
+    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     name TEXT NOT NULL,
     role BankRole NOT NULL,
-    address INT REFERENCES Addresses(id) NOT NULL,
+    address UUID REFERENCES Addresses(id) NOT NULL,
     SSN CHAR(64) NOT NULL UNIQUE,  -- Saving Hashed Social Security Numbers
-    branch INT REFERENCES Branch(id) NOT NULL,
+    branch UUID REFERENCES Branch(id) NOT NULL,
     salary DOUBLE PRECISION NOT NULL
 );
 
 
 CREATE TABLE EmployeeLogins(
-    id INT REFERENCES Employee(id) ON DELETE CASCADE PRIMARY KEY,
+    id UUID REFERENCES Employee(id) ON DELETE CASCADE PRIMARY KEY,
     username TEXT NOT NULL UNIQUE,
     password TEXT NOT NULL,
     totp_secret CHAR(16) NOT NULL
 );
 
 CREATE TABLE Customers(
-    id SERIAL PRIMARY KEY NOT NULL UNIQUE,
+    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     name TEXT NOT NULL,
     email TEXT NOT NULL UNIQUE CHECK ( email ~ '^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$' ),
-    phone TEXT NOT NULL UNIQUE,
-    home_branch INT REFERENCES Branch(id) NOT NULL,
-    address INT REFERENCES Addresses(id) NOT NULL,
+    phone TEXT NOT NULL, -- UNIQUE,
+    home_branch UUID REFERENCES Branch(id) NOT NULL,
+    address UUID REFERENCES Addresses(id) NOT NULL,
     authenticated_email BOOLEAN DEFAULT FALSE
 );
 
 -- Accounts - checkings, savings,
 CREATE TABLE Account(
-    number SERIAL PRIMARY KEY NOT NULL,
-    holder INT REFERENCES Customers(id) NOT NULL,
+    number UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    holder UUID REFERENCES Customers(id) NOT NULL,
     account_name VARCHAR(30) NOT NULL,
     type AccountType NOT NULL,
     balance DOUBLE PRECISION DEFAULT 0,
@@ -65,7 +67,7 @@ CREATE TABLE Account(
 
 
 CREATE TABLE Logins(
-    id INT REFERENCES Customers(id) ON DELETE CASCADE PRIMARY KEY ,
+    id UUID REFERENCES Customers(id) ON DELETE CASCADE PRIMARY KEY ,
     username TEXT NOT NULL UNIQUE,
     password TEXT NOT NULL,
     totp_secret TEXT DEFAULT NULL
@@ -73,15 +75,15 @@ CREATE TABLE Logins(
 
 
 CREATE TABLE AuthorizedUsers(
-    account_number INT REFERENCES Account(number) ON DELETE CASCADE,
-    owner_number INT REFERENCES Customers(id) ON DELETE CASCADE
+    account_number UUID REFERENCES Account(number) ON DELETE CASCADE,
+    owner_number UUID REFERENCES Customers(id) ON DELETE CASCADE
 );
 
 
 CREATE TABLE Transactions(
-    tid SERIAL PRIMARY KEY NOT NULL,
-    account_number INT NOT NULL, -- REFERENCES account(number) -- It can't reference an account because the account might get deleted, and I'm assuming we would still want the records.
-    date DATE NOT NULL DEFAULT now(),
+    tid UUID PRIMARY KEY NOT NULL DEFAULT uuid_generate_v4(),
+    account_number UUID NOT NULL, -- REFERENCES account(number) -- It can't reference an account because the account might get deleted, and I'm assuming we would still want the records.
+    date timestamp NOT NULL DEFAULT now(),
     type TransactionType NOT NULL,
     amount DOUBLE PRECISION NOT NULL,
     description TEXT
@@ -94,8 +96,8 @@ CREATE TABLE AwaitingVerification(
 );
 
 CREATE TABLE LoanRequests(
-    loan_request_id SERIAL PRIMARY KEY NOT NULL,
-    customer_id INT NOT NULL REFERENCES Customers(id),
+    loan_request_id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    customer_id UUID NOT NULL REFERENCES Customers(id),
     loan_name TEXT NOT NULL,
     amount FLOAT NOT NULL CHECK (amount > 0), -- Present Value (P)
     apr FLOAT NOT NULL CHECK ( apr > 0 ),  -- I = APR / Compounding per Year
@@ -107,11 +109,11 @@ CREATE TABLE LoanRequests(
 
 
 CREATE TABLE ApprovedLoans(
-    loan_number SERIAL PRIMARY KEY NOT NULL,
+    loan_number UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     loan_name TEXT NOT NULL,
-    approver_id INT NOT NULL REFERENCES Employee(id),
+    approver_id UUID NOT NULL REFERENCES Employee(id),
     approval_date DATE NOT NULL DEFAULT now(),
-    customer_id INT NOT NULL REFERENCES Customers(id),
+    customer_id UUID NOT NULL REFERENCES Customers(id),
     initial_amount FLOAT NOT NULL CHECK (initial_amount > 0),
     amount_remaining FLOAT NOT NULL CHECK (amount_remaining >= 0),
     n INT NOT NULL CHECK ( n > 0),  -- N, Number of Payments,
@@ -131,10 +133,10 @@ INSERT INTO Addresses(number, direction, street_name, city, state, zipcode) VALU
 INSERT INTO Addresses(number, direction, street_name, city, state, zipcode) VALUES(8456, 'E', 'Cottage Grove', 'Chicago', 'IL', '60654');
 INSERT INTO Addresses(number, direction, street_name, city, state, zipcode) VALUES(4638, 'S', 'Woodlawn', 'Chicago', 'IL', '60653');
 
-INSERT INTO Branch(name, address) VALUES('WCS Western', 2);
-INSERT INTO Branch(name, address) VALUES('WCS Green Line', 3);
-INSERT INTO Branch(name, address) VALUES('WCS Cottage Grove', 4);
-INSERT INTO Branch(name, address) VALUES('WCS Woodlawn', 5);
+INSERT INTO Branch(name, address) VALUES('WCS Western', 'a02fda41-fa83-4820-a1c3-e5cfb03f0187');
+INSERT INTO Branch(name, address) VALUES('WCS Green Line', '7a491c7a-8d64-4c8d-9f7f-7e6cf1d007f3');
+INSERT INTO Branch(name, address) VALUES('WCS Cottage Grove', 'c0b5ccde-f97e-46e2-8c06-59436d8ae170');
+INSERT INTO Branch(name, address) VALUES('WCS Woodlawn', '638e7ab2-c971-45de-b155-7e4fabff1ee2');
 
 INSERT INTO States VALUES('Alabama','AL');
 INSERT INTO States VALUES('Alaska','AK');

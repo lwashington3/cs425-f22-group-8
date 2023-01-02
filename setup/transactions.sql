@@ -1,4 +1,4 @@
-CREATE OR REPLACE FUNCTION withdrawal(account_number INT, amount DOUBLE PRECISION, descript TEXT)
+CREATE OR REPLACE FUNCTION withdrawal(account_number UUID, amount DOUBLE PRECISION, descript TEXT)
 RETURNS DOUBLE PRECISION AS $withdrawn$
 DECLARE
     withdrawn DOUBLE PRECISION;
@@ -19,7 +19,7 @@ END
 $withdrawn$ LANGUAGE plpgsql;
 
 
-CREATE OR REPLACE FUNCTION deposit(account_number INT, amount DOUBLE PRECISION, descript TEXT)
+CREATE OR REPLACE FUNCTION deposit(account_number UUID, amount DOUBLE PRECISION, descript TEXT)
     RETURNS DOUBLE PRECISION AS $deposit$
 DECLARE
 BEGIN
@@ -30,7 +30,7 @@ END
 $deposit$ LANGUAGE plpgsql;
 
 
-CREATE OR REPLACE FUNCTION transfer(initial_account_number INT, final_account_number INT, amount DOUBLE PRECISION, descript TEXT)
+CREATE OR REPLACE FUNCTION transfer(initial_account_number UUID, final_account_number UUID, amount DOUBLE PRECISION, descript TEXT)
     RETURNS VOID AS $$
 DECLARE
     withdrawn DOUBLE PRECISION;

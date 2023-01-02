@@ -14,7 +14,7 @@ abstract class Config
 	}
 
 	private function getDataBaseName(): string {
-		return "cs425";
+		return "wcs";
 	}
 
 	private function getPort(): int {
