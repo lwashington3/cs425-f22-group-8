@@ -226,7 +226,7 @@ $loans = $user->getLoans();
 				} ?></h3>
 		<button onclick="document.getElementById('id01').style.display='block'" style="width:auto;">Create New Account</button>
 		<button onclick="document.getElementById('request_loan').style.display='block'" style="width:auto;">Request New Loan</button>
-		<a href="/api/logout">Logout</a>
+		<a href="/api/logout.php">Logout</a>
 
 	</nav>
 </div>

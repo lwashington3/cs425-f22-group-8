@@ -81,11 +81,11 @@ try{
 		<span class="w3-xxlarge w3-hide-large w3-hide-medium">Welcome to WCS Banking<?php if(!is_null($first_name)) { echo ", " . $first_name; }?></span><br>
 		<span class="w3-large">A banking system of the people, by the people, for the people!</span>
 		<?php if(is_null($first_name)): ?>
-		<p><a href="/signup" class="w3-button w3-white w3-padding-large w3-large w3-margin-top w3-opacity w3-hover-opacity-off">Learn more and start today</a></p>
-		<p><a href="/login" class="w3-button w3-white w3-padding-large w3-large w3-margin-top w3-opacity w3-hover-opacity-off">Already a member? Login here</a></p>
+		<p><a href="/signup.php" class="w3-button w3-white w3-padding-large w3-large w3-margin-top w3-opacity w3-hover-opacity-off">Learn more and start today</a></p>
+		<p><a href="/login.php" class="w3-button w3-white w3-padding-large w3-large w3-margin-top w3-opacity w3-hover-opacity-off">Already a member? Login here</a></p>
 		<?php else: ?>
-		<p><a href="/profile" class="w3-button w3-white w3-padding-large w3-large w3-margin-top w3-opacity w3-hover-opacity-off">Check my profile</a></p>
-		<p><a href="/api/logout" class="w3-button w3-white w3-padding-large w3-large w3-margin-top w3-opacity w3-hover-opacity-off">Logout</a></p>	
+		<p><a href="/profile.php" class="w3-button w3-white w3-padding-large w3-large w3-margin-top w3-opacity w3-hover-opacity-off">Check my profile</a></p>
+		<p><a href="/api/logout.php" class="w3-button w3-white w3-padding-large w3-large w3-margin-top w3-opacity w3-hover-opacity-off">Logout</a></p>
 		<?php endif; ?>
 	</div> 
 </header>

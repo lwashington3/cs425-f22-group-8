@@ -138,7 +138,7 @@ try{
 
 	<nav class="floating-menu">
 		<h3>Hello <?php echo $username?></h3>
-		<a href="/api/logout">Logout</a>
+		<a href="/api/logout.php"Logout</a>
 	</nav>
 
 	<script>

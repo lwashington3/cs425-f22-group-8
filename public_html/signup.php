@@ -305,7 +305,7 @@ try{
 					<?php } ?>
 				</datalist><br>
 		<button type="submit" name="submit" id="submit" form="signup_form" hidden>Sign Up!</button>
-		<p>Already have an account? <a href="/login">Login Here</a></p>
+		<p>Already have an account? <a href="/login.php">Login Here</a></p>
 	</form>
 </div>
 </section>

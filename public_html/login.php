@@ -47,7 +47,7 @@ require_once "api/constants.php";
 			<input type="password" id="password" name="password" value="" autocomplete="current-password" placeholder = "Password" oninput="checkInfo()" onkeyup="checkInfo()" required>
 			<input type="number" id="auth_code" name="auth_code" value="" placeholder = "2FA code"><br>
 			<button type="submit" name="submit" id="submit" form="form" hidden>Login</button>
-			<p>Not with us yet?<a href="/signup"> Sign Up Here</a></p>
+			<p>Not with us yet?<a href="/signup.php"> Sign Up Here</a></p>
 		</form>
 	</div>
 	</section>
