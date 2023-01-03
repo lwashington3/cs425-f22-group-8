@@ -42,7 +42,7 @@ require_once "api/constants.php";
 
 	<section class="form">
 	<div class="center">
-		<form name="form" id="form" action="/api/login" method="POST">
+		<form name="form" id="form" action="/api/login.php" method="POST">
 			<input type="text" id="username" name="username" value="" autocomplete="username" placeholder = "Username" oninput="checkInfo()" required>
 			<input type="password" id="password" name="password" value="" autocomplete="current-password" placeholder = "Password" oninput="checkInfo()" onkeyup="checkInfo()" required>
 			<input type="number" id="auth_code" name="auth_code" value="" placeholder = "2FA code"><br>

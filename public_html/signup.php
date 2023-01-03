@@ -260,7 +260,7 @@ try{
 <section class="form">
 <div class="center">
 
-	<form name="signup_form" id="signup_form" action="/api/signup" method="POST" onsubmit="return validate()">
+	<form name="signup_form" id="signup_form" action="/api/signup.php" method="POST" onsubmit="return validate()">
 		<input type="text" id="username" name="username" placeholder="Username" value="" oninput="checkInfo()" required autocomplete="username">
 		<div id="username_error" class="emsg"></div>
 		<input type="password" id="password" name="password" placeholder="Password" value="" oninput="checkInfo()" required autocomplete="new-password" minlength="8">
