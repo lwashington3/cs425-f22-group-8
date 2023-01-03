@@ -4,7 +4,7 @@ require_once (dirname(__DIR__) . "/api/ClassFiles/CookieManager.php");
 require_once (dirname(__DIR__) . "/api/ClassFiles/User.php");
 require_once "constants.php";
 
-$account_number = (int)$_POST["account_number"];
+$account_number = $_POST["account_number"];
 
 $cookie = new CookieManager();
 

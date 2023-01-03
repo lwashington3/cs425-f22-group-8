@@ -41,7 +41,7 @@ class Account extends CS425Class
 			throw new InvalidArgumentException("The given account type was not valid.");
 		}
 
-		$result = $this->query(sprintf("INSERT INTO Account(holder, account_name, type) VALUES(%d,'%s','%s') RETURNING number",
+		$result = $this->query(sprintf("INSERT INTO Account(holder, account_name, type) VALUES('%s','%s','%s') RETURNING number",
 			$creator->getUserId(), $name, $type));
 
 		$this->account_number = pg_fetch_result($result, 0);
@@ -58,19 +58,19 @@ class Account extends CS425Class
 	 */
 	public function setBalance(User $user, float $balance): float | false
 	{
-		$own_result = $this->query(sprintf("SELECT COUNT(*) FROM Account WHERE number = %d AND holder = %d", $this->account_number, $user->getUserId()));
-		$auth_result = $this->query(sprintf("SELECT COUNT(*) FROM AuthorizedUsers WHERE account_number = %d AND owner_number = %d", $this->account_number, $user->getUserId()));
+		$own_result = $this->query(sprintf("SELECT COUNT(*) FROM Account WHERE number = '%s' AND holder = '%s'", $this->account_number, $user->getUserId()));
+		$auth_result = $this->query(sprintf("SELECT COUNT(*) FROM AuthorizedUsers WHERE account_number = '%s' AND owner_number = '%s'", $this->account_number, $user->getUserId()));
 
 		if(pg_fetch_result($auth_result, 0, 0) == 0 and pg_fetch_result($own_result, 0, 0)){ return false; }
 
-		$result = $this->query(sprintf("UPDATE Account SET balance = %f WHERE number = %d RETURNING balance", $balance, $this->account_number));
+		$result = $this->query(sprintf("UPDATE Account SET balance = %f WHERE number = '%s' RETURNING balance", $balance, $this->account_number));
 		return pg_fetch_result($result, 0, 0);
 	}
 
 	/**
 	 * @throws PGException
 	 */
-	public function getBalance(): float{ return $this->getBasicResult(sprintf("SELECT balance FROM Account WHERE number = %d", $this->account_number)); }
+	public function getBalance(): float{ return $this->getBasicResult(sprintf("SELECT balance FROM Account WHERE number = '%s'", $this->account_number)); }
 
 	/**
 	 * @return int
@@ -81,7 +81,7 @@ class Account extends CS425Class
 	 * @throws PGException
 	 */
 	public function setOwner(User $owner): bool {
-		$result = $this->query(sprintf("UPDATE Account SET holder = %d WHERE number = %d RETURNING holder", $owner->getUserId(), $this->account_number));
+		$result = $this->query(sprintf("UPDATE Account SET holder = '%s' WHERE number = '%s' RETURNING holder", $owner->getUserId(), $this->account_number));
 		return pg_fetch_result($result, 0, 0) == $owner->getUserId();
 	}
 
@@ -89,45 +89,45 @@ class Account extends CS425Class
 	 * @throws PGException
 	 */
 	public function getOwner(): User {
-		$result = $this->query(sprintf("SELECT holder FROM Account WHERE number = %d", $this->account_number));
+		$result = $this->query(sprintf("SELECT holder FROM Account WHERE number = '%s'", $this->account_number));
 		return new User(pg_fetch_result($result, 0, 0));
 	}
 
 	/**
 	 * @throws PGException
 	 */
-	public function setName(string $name){ $this->query(sprintf("UPDATE Account SET account_name = '%s' WHERE number = %d", $this->prepareData($name), $this->account_number)); }
+	public function setName(string $name){ $this->query(sprintf("UPDATE Account SET account_name = '%s' WHERE number = '%s'", $this->prepareData($name), $this->account_number)); }
 
 	/**
 	 * @return string|false
 	 * @throws PGException
 	 */
-	public function getName(): string|false { return $this->getBasicResult(sprintf("SELECT account_name FROM Account WHERE number = %d", $this->account_number)); }
+	public function getName(): string|false { return $this->getBasicResult(sprintf("SELECT account_name FROM Account WHERE number = '%s'", $this->account_number)); }
 
 	/**
 	 * @throws PGException
 	 */
-	public function getType(): string {	return $this->getBasicResult(sprintf("SELECT type FROM Account WHERE number = %d", $this->account_number)); }
+	public function getType(): string {	return $this->getBasicResult(sprintf("SELECT type FROM Account WHERE number = '%s'", $this->account_number)); }
 
 	/**
 	 * @throws PGException
 	 */
-	public function getInterest(): float { return $this->getBasicResult(sprintf("SELECT interest FROM Account WHERE number = %d", $this->account_number)); }
+	public function getInterest(): float { return $this->getBasicResult(sprintf("SELECT interest FROM Account WHERE number = '%s'", $this->account_number)); }
 
 	/**
 	 * @throws PGException
 	 */
-	public function getMonthlyFee(): float { return $this->getBasicResult(sprintf("SELECT monthly_fee FROM Account WHERE number = %d", $this->account_number)); }
+	public function getMonthlyFee(): float { return $this->getBasicResult(sprintf("SELECT monthly_fee FROM Account WHERE number = '%s'", $this->account_number)); }
 
 	/**
 	 * @throws PGException
 	 */
-	public function canGoNegative(): bool { return convert_to_bool($this->getBasicResult(sprintf("SELECT can_go_negative FROM Account WHERE number = %d", $this->account_number))); }
+	public function canGoNegative(): bool { return convert_to_bool($this->getBasicResult(sprintf("SELECT can_go_negative FROM Account WHERE number = '%s'", $this->account_number))); }
 
 	/**
 	 * @throws PGException
 	 */
-	public function deleteAccount(): bool|string { return $this->getBasicResult(sprintf("DELETE FROM Account WHERE number = %d", $this->getAccountNumber())); }
+	public function deleteAccount(): bool|string { return $this->getBasicResult(sprintf("DELETE FROM Account WHERE number = '%s'", $this->getAccountNumber())); }
 
 	/**
 	 * @throws PGException
@@ -150,7 +150,7 @@ class Account extends CS425Class
 	 * @throws PGException
 	 */
 	public function getMonthlyStatement(int $month, int $year): array{
-		$result = $this->query(sprintf("SELECT * FROM statement(%d,%d,%d)", $this->getAccountNumber(), $month, $year));
+		$result = $this->query(sprintf("SELECT * FROM statement('%s',%d,%d)", $this->getAccountNumber(), $month, $year));
 		$statement = array();
 
 		while ($row = pg_fetch_assoc($result)){
@@ -164,7 +164,7 @@ class Account extends CS425Class
 	 * @throws PGException
 	 */
 	public function getPendingTransactions(): array{
-		$result = $this->query(sprintf("SELECT * FROM pending_transactions(%d)", $this->getAccountNumber()));
+		$result = $this->query(sprintf("SELECT * FROM pending_transactions('%s')", $this->getAccountNumber()));
 		$statement = array();
 
 		while ($row = pg_fetch_assoc($result)){
