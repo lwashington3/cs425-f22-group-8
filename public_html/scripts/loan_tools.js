@@ -127,7 +127,7 @@ function requestLoan(){
 
 	const req = new XMLHttpRequest();
 	req.addEventListener("load", requestLoanListener);
-	req.open("POST", "https://cs425.lenwashingtoniii.com/api/request_loan");
+	req.open("POST", "https://wcs.lenwashingtoniii.com/api/request_loan");
 	req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 	req.send(`amount=${pv}&compounding_per_year=${cpy}&apr=${apr}&n=${n}&loan_name=${name}`);
 }

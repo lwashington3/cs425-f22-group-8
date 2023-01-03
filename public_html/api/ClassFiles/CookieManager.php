@@ -18,7 +18,7 @@ class CookieManager
 		setcookie($this->cookieName, $this->createCookieValue($username, $isEmployee),
 			time() + (($isEmployee) ? $this->employee_expire_time : $this->expire_time),
 			"/",
-			"cs425.lenwashingtoniii.com");
+			"wcs.lenwashingtoniii.com");
 	}
 
 	function isValidCookie(): bool{
@@ -39,7 +39,7 @@ class CookieManager
 		return $this->getCookieData()["isEmployee"];
 	}
 
-	private function getCookieData(): array|bool{
+	private function getCookieData(): array | bool{
 		if(!isset($_COOKIE[$this->cookieName])){ return false; }
 		$data = json_decode($_COOKIE[$this->cookieName], true);
 
@@ -75,6 +75,6 @@ class CookieManager
 
 	public function deleteCookie(): void
 	{
-		setcookie($this->cookieName, "", time() - $this->expire_time, "/", "cs425.lenwashingtoniii.com");
+		setcookie($this->cookieName, "", time() - $this->expire_time, "/", "wcs.lenwashingtoniii.com");
 	}
 }

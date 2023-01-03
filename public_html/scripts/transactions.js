@@ -16,7 +16,7 @@ function showAccount(account_number){
 	let params = `account_number=${account_number}`;
 	const req = new XMLHttpRequest();
 	req.addEventListener("load", reqListener);
-	req.open("POST", "https://cs425.lenwashingtoniii.com/api/get_account_info");
+	req.open("POST", "https://wcs.lenwashingtoniii.com/api/get_account_info");
 	req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 	req.send(params);
 	openSidebar();
@@ -85,7 +85,7 @@ function transact(){
 	}
 	const req = new XMLHttpRequest();
 	req.addEventListener("load", transactionListener);
-	req.open("POST", "https://cs425.lenwashingtoniii.com/api/transact");
+	req.open("POST", "https://wcs.lenwashingtoniii.com/api/transact");
 	req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 	req.send(params)
 }
@@ -116,7 +116,7 @@ function getPendingTransactions(){
 
 	const req = new XMLHttpRequest();
 	req.addEventListener("load", loadSchedule);
-	req.open("POST", "https://cs425.lenwashingtoniii.com/api/get_pending_transactions");
+	req.open("POST", "https://wcs.lenwashingtoniii.com/api/get_pending_transactions");
 	req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 	req.send(`account_number=${account_number}`);
 }
@@ -132,7 +132,7 @@ function getMonthlyStatement(){
 
 	const req = new XMLHttpRequest();
 	req.addEventListener("load", loadSchedule);
-	req.open("POST", "https://cs425.lenwashingtoniii.com/api/get_monthly_statement");
+	req.open("POST", "https://wcs.lenwashingtoniii.com/api/get_monthly_statement");
 	req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 	req.send(`account_number=${account_number}&statement_month=${month}`);
 }
@@ -161,7 +161,7 @@ function displayAccount(account_number){
 	let params = `account_number=${account_number}`;
 	const req = new XMLHttpRequest();
 	req.addEventListener("load", accountListener);
-	req.open("POST", "https://cs425.lenwashingtoniii.com/api/get_account_info");
+	req.open("POST", "https://wcs.lenwashingtoniii.com/api/get_account_info");
 	req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 	req.send(params);
 }
@@ -182,7 +182,7 @@ function getAccounts(){
 	}
 
 	req.addEventListener("load", _thisListener);
-	req.open("POST", "https://cs425.lenwashingtoniii.com/api/get_accounts");
+	req.open("POST", "https://wcs.lenwashingtoniii.com/api/get_accounts");
 	req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 	req.send("");
 }
@@ -208,7 +208,7 @@ function createAccount(){
 
 	const req = new XMLHttpRequest();
 	req.addEventListener("load", listener);
-	req.open("POST", "https://cs425.lenwashingtoniii.com/api/create_account");
+	req.open("POST", "https://wcs.lenwashingtoniii.com/api/create_account");
 	req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 	req.send(`account_name=${name}&account_type=${type}&initial_balance=${initial}`);
 }
@@ -238,7 +238,7 @@ function deleteAccount(){
 	}
 	const req = new XMLHttpRequest();
 	req.addEventListener("load", deleteListener);
-	req.open("POST", "https://cs425.lenwashingtoniii.com/api/delete_account");
+	req.open("POST", "https://wcs.lenwashingtoniii.com/api/delete_account");
 	req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 	req.send(`account_number=${number}`);
 }

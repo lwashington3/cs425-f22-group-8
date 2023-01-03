@@ -98,7 +98,7 @@ class Authentication extends CS425Class
 	 * @param string $algo The algorithm being used. Default is sha1.
 	 * @return string
 	 */
-	public function GenerateToken($key, $time = null, $length = 6, $time_interval=30, $algo="sha1") : string
+	public function GenerateToken(string $key, float|int|null $time = null, int $length = 6, int $time_interval=30, string $algo="sha1") : string
 	{
 		// Pad the key if necessary
 		if ($algo === 'sha256') {

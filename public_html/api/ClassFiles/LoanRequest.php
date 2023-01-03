@@ -6,7 +6,7 @@ require_once (dirname(__DIR__) . "/finance_tools.php");
 
 class LoanRequest extends CS425Class
 {
-	private readonly int $loan_request_id;
+	private readonly string $loan_request_id;
 
 	public function __construct(){
 		parent::__construct(new LoanConfig());
@@ -23,9 +23,9 @@ class LoanRequest extends CS425Class
 		}
 	}
 
-	private function __init__(int $loan_req_id)
+	private function __init__(string $loan_req_id)
 	{
-		$this->loan_request_id = $loan_req_id;
+		$this->loan_request_id = $this->prepareData($loan_req_id);
 	}
 
 	/**
@@ -46,7 +46,7 @@ class LoanRequest extends CS425Class
 		echo $this->loan_request_id;
 	}
 
-	public function getNumber(): int { return $this->loan_request_id; }
+	public function getNumber(): string { return $this->loan_request_id; }
 
 	/**
 	 * @throws PGException

@@ -16,7 +16,7 @@ class AccountTransaction extends CS425Class
 	 * @throws PGException
 	 */
 	private function checkAccountExists(Account $account): bool{
-		$result = $this->query(sprintf("SELECT COUNT(number) FROM Account WHERE number = %d", $account->getAccountNumber()));
+		$result = $this->query(sprintf("SELECT COUNT(number) FROM Account WHERE number = '%s'", $account->getAccountNumber()));
 		return pg_fetch_result($result, 0) != 0;
 	}
 
@@ -31,8 +31,8 @@ class AccountTransaction extends CS425Class
 
 		if($authorizer instanceof User){
 			$result = $this->query(sprintf("SELECT (d.owner_count + f.auth_count) AS count FROM
-    			(SELECT COUNT(balance) AS owner_count FROM Account WHERE number = %d AND holder = %d) d,
-    			(SELECT COUNT(*) AS auth_count FROM AuthorizedUsers WHERE account_number = %d AND owner_number = %d) f",
+    			(SELECT COUNT(balance) AS owner_count FROM Account WHERE number = '%s' AND holder = '%s') d,
+    			(SELECT COUNT(*) AS auth_count FROM AuthorizedUsers WHERE account_number = '%s' AND owner_number = '%s') f",
 				$account->getAccountNumber(), $authorizer->getUserId(), $account->getAccountNumber(), $authorizer->getUserId()));
 			if(pg_fetch_result($result, 0) == 0){
 				return false;
@@ -75,7 +75,7 @@ class AccountTransaction extends CS425Class
 			return false;
 		}
 
-		$query = sprintf("SELECT withdrawal(%d,%f,'%s')", $account->getAccountNumber(), abs($amount), $description);
+		$query = sprintf("SELECT withdrawal('%s',%f,'%s')", $account->getAccountNumber(), abs($amount), $description);
 		return $this->runTransactionFunction($query);
 	}
 
@@ -98,7 +98,7 @@ class AccountTransaction extends CS425Class
 			$description = $this->prepareData($description);
 		}
 
-		$query = sprintf("SELECT deposit(%d,%f,'%s')", $account->getAccountNumber(), abs($amount), $description);
+		$query = sprintf("SELECT deposit('%s',%f,'%s')", $account->getAccountNumber(), abs($amount), $description);
 		return $this->runTransactionFunction($query);
 	}
 
@@ -108,7 +108,7 @@ class AccountTransaction extends CS425Class
 		}
 
 		if($description == ""){
-			$description = sprintf("Transfer from Account %d to Account %d", $from->getAccountNumber(), $to->getAccountNumber());
+			$description = sprintf("Transfer from Account %s to Account %s", $from->getAccountNumber(), $to->getAccountNumber());
 		} else{
 			$description = $this->prepareData($description);
 		}
@@ -117,8 +117,7 @@ class AccountTransaction extends CS425Class
 		if(!$withdrawal || $withdrawal == 0){
 			return false;
 		}
-		$query = sprintf("SELECT deposit(%d,%f,'%s')", $to->getAccountNumber(), abs($withdrawal), $description);
-		return
-			$this->runTransactionFunction($query);
+		$query = sprintf("SELECT deposit('%s',%f,'%s')", $to->getAccountNumber(), abs($withdrawal), $description);
+		return $this->runTransactionFunction($query);
 	}
 }

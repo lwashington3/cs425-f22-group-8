@@ -85,7 +85,7 @@ try{
 
 			const req = new XMLHttpRequest();
 			req.addEventListener("load", getLoanListener);
-			req.open("POST", "https://cs425.lenwashingtoniii.com/api/get_loan_request");
+			req.open("POST", "https://wcs.lenwashingtoniii.com/api/get_loan_request");
 			req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 			req.send(`request_id=${loan_id}`);
 		}

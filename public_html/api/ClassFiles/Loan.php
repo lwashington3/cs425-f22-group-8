@@ -7,16 +7,16 @@ require_once (dirname(__DIR__) . "/tools.php");
 
 class Loan extends CS425Class
 {
-	private readonly int $loan_number;
+	private readonly string $loan_number;
 
 	public function __construct($loan_number){
 		parent::__construct(new LoanConfig());
-		$this->$loan_number = $loan_number;
+		$this->$loan_number = $this->prepareData($loan_number);
 	}
 
-	public function getLoanNumber(){ return $this->loan_number; }
+	public function getLoanNumber(): string { return $this->loan_number; }
 
-	public function getName(){
+	public function getName(): string{
 		return $this->getBasicResult(sprintf("SELECT loan_name FROM ApprovedLoans WHERE loan_number = %d", $this->loan_number));
 	}
 

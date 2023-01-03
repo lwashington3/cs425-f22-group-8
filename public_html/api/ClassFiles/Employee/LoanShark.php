@@ -6,7 +6,7 @@ require_once (dirname(__DIR__, 2) . "/ClassFiles/LoanRequest.php");
 
 class LoanShark extends Employee
 {
-	public function __construct(int $employee_id)
+	public function __construct(string $employee_id)
 	{
 		parent::__construct($employee_id, new LoanConfig());
 	}

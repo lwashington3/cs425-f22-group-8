@@ -10,7 +10,7 @@ if (!(isset($_POST['fullname']) && isset($_POST['email']) && isset($_POST['usern
 )) {
 	http_response_code(400);
 	respond("All fields are required");
-	header("Location: " . HTTPS_HOST . "/signup");
+	header("Location: " . HTTPS_HOST . "/signup.php");
 	return;
 }
 
@@ -27,20 +27,20 @@ try{
 	if($db->usernameInUse($_POST['username'])){
 		http_response_code(226);
 		respond("Username is already taken. Try a different one.");
-		header("Location: " . HTTPS_HOST . "/signup");
+		header("Location: " . HTTPS_HOST . "/signup.php");
 		return;
 	}
 } catch(PGException $pgException){
 	http_response_code(500);
 	respond($pgException->getMessage());
-	header("Location: " . HTTPS_HOST . "/signup");
+	header("Location: " . HTTPS_HOST . "/signup.php");
 	return;
 }
 
 if(!isValidEmail($_POST["email"])){
 	http_response_code(406);
 	respond("You must input a valid email address.");
-	header("Location: " . HTTPS_HOST . "/signup");
+	header("Location: " . HTTPS_HOST . "/signup.php");
 	return;
 }
 
@@ -48,20 +48,20 @@ try {
 	if($db->emailInUse($_POST["email"])){
 		http_response_code(226);
 		respond("Email-address is already in use, please use a different one.");
-		header("Location: " . HTTPS_HOST . "/signup");
+		header("Location: " . HTTPS_HOST . "/signup.php");
 		return;
 	}
 } catch(PGException $pgException){
 	http_response_code(500);
 	respond($pgException->getMessage());
-	header("Location: " . HTTPS_HOST . "/signup");
+	header("Location: " . HTTPS_HOST . "/signup.php");
 	return;
 }
 
 if(strlen($_POST["state"]) != 2){
 	http_response_code(400);
 	respond("The state should be the 2 letter US state abbreviation, not: " . $_POST["state"]);
-	header("Location: " . HTTPS_HOST . "/signup");
+	header("Location: " . HTTPS_HOST . "/signup.php");
 	return;
 }
 
@@ -69,7 +69,7 @@ $result = $db->query(sprintf("SELECT COUNT(abbreviation) FROM States WHERE abbre
 if(pg_fetch_result($result, 0, 0) == 0){
 	http_response_code(400);
 	respond("I wasn't aware we had a US state abbreviated: " . $_POST["state"] . ".");
-	header("Location: " . HTTPS_HOST . "/signup");
+	header("Location: " . HTTPS_HOST . "/signup.php");
 	return;
 }
 
@@ -83,7 +83,7 @@ try {
 	} else {
 		http_response_code(500);
 		respond("Sign up Failed");
-		header("Location: " . HTTPS_HOST . "/signup");
+		header("Location: " . HTTPS_HOST . "/signup.php");
 	}
 } catch(PGException $pgException){
 	http_response_code(500);

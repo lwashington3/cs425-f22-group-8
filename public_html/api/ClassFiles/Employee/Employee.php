@@ -7,18 +7,18 @@ require_once "EmployeeTypes.php";
 
 abstract class Employee extends CS425Class
 {
-	protected readonly int $employee_id;
+	protected readonly string $employee_id;
 	private string|false $authcode;
 
-	public function __construct(int $employee_id, Config $cfg){
+	public function __construct(string $employee_id, Config $cfg){
 		parent::__construct($cfg);
-		$this->employee_id = $employee_id;
+		$this->employee_id = $this->prepareData($employee_id);
 		//$this->ensureEmployeeType();
 		$this->authcode = false;
 	}
 
 	public function getEmployeeType(): EmployeeTypes{
-		$type = $this->getBasicResult(sprintf("SELECT role FROM Employee WHERE id = %d", $this->employee_id));
+		$type = $this->getBasicResult(sprintf("SELECT role FROM Employee WHERE id = '%s'", $this->employee_id));
 		return match ($type) {
 			"Teller" => EmployeeTypes::Teller,
 			"Loan Shark" => EmployeeTypes::LoanShark,
@@ -38,7 +38,7 @@ abstract class Employee extends CS425Class
 
 	protected abstract function employeeType(): EmployeeTypes;
 
-	public function getEmployeeID(): int { return $this->employee_id; }
+	public function getEmployeeID(): string { return $this->employee_id; }
 
 	public function setAuthCode(string $authcode){
 		$this->authcode = $authcode;

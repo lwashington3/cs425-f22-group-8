@@ -8,15 +8,16 @@ require_once "Loan.php";
 
 class User extends CS425Class
 {
-	private int $id;
+	private string $id;
 
 	/**
 	 * @throws PGException
 	 */
 	public function __construct($id){
 		parent::__construct(new ProfileConfig());
+		$id = $this->prepareData($id);
 
-		$result = $this->query(sprintf("SELECT COUNT(*) FROM Customers WHERE id = %d", $id));
+		$result = $this->query(sprintf("SELECT COUNT(*) FROM Customers WHERE id = '%s'", $id));
 		if(pg_fetch_result($result, 0) == 0){
 			throw new InvalidArgumentException(sprintf("No user exists ID'd %d.", $id));
 		}
@@ -40,9 +41,7 @@ class User extends CS425Class
 		return explode(" ", $name)[0];
 	}
 
-	public function getUserId(): int{
-		return $this->id;
-	}
+	public function getUserId(): string{ return $this->id; }
 
 	/**
 	 * @return Account[]

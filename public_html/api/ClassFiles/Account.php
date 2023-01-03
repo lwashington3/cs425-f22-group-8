@@ -8,7 +8,7 @@ require_once (dirname(__DIR__) . "/tools.php");
 
 class Account extends CS425Class
 {
-	private readonly int $account_number;
+	private readonly string $account_number;
 
 	public function __construct(){
 		parent::__construct(new ProfileConfig());
@@ -26,7 +26,7 @@ class Account extends CS425Class
 		}
 	}
 	private function __init__($acc_number){
-		$this->account_number = (int)$this->prepareData($acc_number); // TODO: Check that the account exists
+		$this->account_number = $this->prepareData($acc_number); // TODO: Check that the account exists
 	}
 
 	/**
@@ -75,7 +75,7 @@ class Account extends CS425Class
 	/**
 	 * @return int
 	 */
-	public function getAccountNumber(): int { return $this->account_number; }
+	public function getAccountNumber(): string { return $this->account_number; }
 
 	/**
 	 * @throws PGException

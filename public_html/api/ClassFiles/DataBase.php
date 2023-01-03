@@ -94,11 +94,11 @@ class DataBase extends CS425Class
 		$row = pg_fetch_assoc($result);
 
 		$user_id = $row["id"];
-		$result = parent::query(sprintf("SELECT authenticated_email FROM Customers WHERE id = %s", $user_id));
+		$result = parent::query(sprintf("SELECT authenticated_email FROM Customers WHERE id = '%s'", $user_id));
 
 		if (pg_affected_rows($result) == 0) {
 			// The login is for an employee
-			respond("You do not have an account with us, please create one at " . HTTPS_HOST . "/signup.");
+			respond("You do not have an account with us, please create one at " . HTTPS_HOST . "/signup.php.");
 			return false;
 		}
 
@@ -120,7 +120,7 @@ class DataBase extends CS425Class
 		if(!is_null($totp)){
 			$valid_code = $this->authenticator->checkTOTP($username, $authcode, false);
 			if(!$valid_code){
-				throw new InvalidArgumentException("Response: Invalid 2FA code");
+				throw new InvalidArgumentException("Response: Invalid 2FA code.");
 			}
 		}
 		# endregion
@@ -176,18 +176,18 @@ class DataBase extends CS425Class
 
 		# endregion
 
-		$result = parent::query(sprintf("INSERT INTO Customers(name,email,phone,home_branch,address) VALUES ('%s','%s','%s',%s,%s) RETURNING id",
+		$result = parent::query(sprintf("INSERT INTO Customers(name,email,phone,home_branch,address) VALUES ('%s','%s','%s','%s','%s') RETURNING id",
 			$fullname, $email, $phone, $branch_id, $address->getAddressId()));
 		$user_id = pg_fetch_result($result, 0, 0);
 
-		parent::query(sprintf("INSERT INTO Logins VALUES (%s,'%s','%s')", $user_id, $username, $password));
+		parent::query(sprintf("INSERT INTO Logins VALUES ('%s','%s','%s')", $user_id, $username, $password));
 
 		$verification = new Verifications();
 		$verification->send_verification_email($email, $fullname);
 		return true;
 	}
 
-	public function query($query, $errorMessage=""): bool|Result
+	public function query($query, string $errorMessage=""): bool|Result
 	{
 		if(!str_starts_with($query, "SELECT")){ return false; }
 		return parent::query($query, $errorMessage);

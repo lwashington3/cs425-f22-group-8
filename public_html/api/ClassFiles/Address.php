@@ -5,7 +5,7 @@ require_once (dirname(__DIR__) . "/ClassFiles/CS425Class.php");
 
 class Address extends CS425Class
 {
-	private readonly int $addressId;
+	private readonly string $addressId;
 
 	public function __construct(){
 		parent::__construct(new AddressConfig());
@@ -23,13 +23,13 @@ class Address extends CS425Class
 	}
 
 	private function __init__($add_number){
-		$this->addressId = $add_number;
+		$this->addressId = $this->prepareData($add_number);
 	}
 
 	/**
 	 * @return int
 	 */
-	public function getAddressId(): int { return $this->addressId; }
+	public function getAddressId(): string { return $this->addressId; }
 
 	/**
 	 * @throws PGException
