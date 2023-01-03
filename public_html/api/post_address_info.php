@@ -10,7 +10,7 @@ if (!(isset($_POST["address_number"])  && isset($_POST["direction"]) && isset($_
 	&& isset($_POST["state"]) && isset($_POST["zipcode"]) && isset($_POST['apt']))) {
 	http_response_code(400);
 	respond("All fields are required");
-	header("Location: " . HTTPS_HOST . "/profile");
+	header("Location: " . HTTPS_HOST . "/profile.php");
 	return;
 }
 

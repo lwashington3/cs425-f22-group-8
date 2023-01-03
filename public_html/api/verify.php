@@ -18,6 +18,6 @@ if(!$verify->check_verification($_GET["email"], $_GET["code"])){
 	http_response_code(400);
 } else{
 	echo "Verification Email Accepted" . PHP_EOL;
-	header("Location: /profile");
+	header("Location: /profile.php");
 	http_response_code(303);
 }

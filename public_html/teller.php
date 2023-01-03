@@ -16,7 +16,7 @@ if (!$username) {
 }
 
 if(!$cookie->isEmployee()){
-	header("Location: " . HTTPS_HOST . "/profile");
+	header("Location: " . HTTPS_HOST . "/profile.php");
 	respond("You should not be accessing this page.");
 	http_response_code(301);
 	return;

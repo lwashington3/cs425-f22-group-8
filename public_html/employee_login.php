@@ -16,7 +16,7 @@ try{
 
 if(!$cookies->isEmployee()){
 	respond("You are not an employee.");
-	header("Location: " . HTTPS_HOST . "/profile");
+	header("Location: " . HTTPS_HOST . "/profile.php");
 	return;
 }
 
@@ -25,15 +25,15 @@ $result = $db->query(sprintf("SELECT role FROM Employee WHERE id = (SELECT id FR
 switch(pg_fetch_result($result, 0)){
 	case "Teller":
 		http_response_code(307);
-		header("Location: " . HTTPS_HOST . "/teller");
+		header("Location: " . HTTPS_HOST . "/teller.php");
 		break;
 	case "Loan Shark":
 		http_response_code(307);
-		header("Location: " . HTTPS_HOST . "/loan_manager");
+		header("Location: " . HTTPS_HOST . "/loan_manager.php");
 		break;
 	case "Manager":
 		http_response_code(307);
-		header("Location: " . HTTPS_HOST . "/manager");
+		header("Location: " . HTTPS_HOST . "/manager.php");
 		break;
 	default:
 		http_response_code(500);

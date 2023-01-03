@@ -62,7 +62,7 @@ class DataBase extends CS425Class
 
 			if (pg_affected_rows($result) != 0) {
 				if($isEmployee){
-					header("Location: " . HTTPS_HOST . "/employee_login");
+					header("Location: " . HTTPS_HOST . "/employee_login.php");
 				}
 				return "Logged In Successfully";
 			}
@@ -147,7 +147,7 @@ class DataBase extends CS425Class
 			return false;
 		}
 		$this->cookieManager->createCookie($username, true);
-		header("Location: " . HTTPS_HOST . "/employee_login");
+		header("Location: " . HTTPS_HOST . "/employee_login.php");
 		return "Employee Logged In";
 	}
 

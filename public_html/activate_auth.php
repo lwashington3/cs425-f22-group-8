@@ -10,7 +10,10 @@ if($enable){
 	$auth = new Authentication();
 	$key = $auth->createSecretKey();
 	$qrcode = $auth->generateQRCode($username, $key);
-	$auth->setTOTP($username, $key);
+	try {
+		$auth->setTOTP($username, $key);
+	} catch (PGException $e) {
+	}
 }
 
 ?>

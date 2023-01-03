@@ -27,18 +27,18 @@ try{
 } catch(PGException $pgException){
 	http_response_code(500);
 	respond($pgException->getMessage());
-	header("Location: " . HTTPS_HOST . "/login");
+	header("Location: " . HTTPS_HOST . "/login.php");
 	return;
 } catch(InvalidArgumentException $argumentException){
 	http_response_code(401);
 	respond($argumentException->getMessage());
-	header("Location: " . HTTPS_HOST . "/login");
+	header("Location: " . HTTPS_HOST . "/login.php");
 	return;
 }
 
 if (gettype($result) == 'boolean') {
 	http_response_code(401);
-	header("Location: " . HTTPS_HOST . "/login");
+	header("Location: " . HTTPS_HOST . "/login.php");
 	return;
 }
 
@@ -46,7 +46,7 @@ else{
 	http_response_code(302);
 	respond($result);
 	if(!is_header_set("Location")){
-		header("Location: " . HTTPS_HOST . "/profile");
+		header("Location: " . HTTPS_HOST . "/profile.php");
 	}
 }
 

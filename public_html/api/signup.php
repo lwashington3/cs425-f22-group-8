@@ -79,7 +79,7 @@ try {
 		$_POST["zipcode"], $_POST["apt"], $_POST["branch"])) {
 		http_response_code(303);
 		respond("Sign Up Success");
-		header("Location: " . HTTPS_HOST . "/login");
+		header("Location: " . HTTPS_HOST . "/login.php");
 	} else {
 		http_response_code(500);
 		respond("Sign up Failed");
