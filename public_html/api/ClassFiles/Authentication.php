@@ -2,6 +2,9 @@
 
 declare(strict_types=1);
 
+error_reporting(E_ALL);
+ini_set('display_errors', '1');
+
 include_once "CS425Class.php";
 require_once(dirname(__DIR__) . "/ConfigFiles/AuthConfig.php");
 require_once(dirname(__DIR__) . "/constants.php");
@@ -14,13 +17,11 @@ use chillerlan\QRCode\QROptions;
 class Authentication extends CS425Class
 {
 	protected string $charset;
-	#private string $db_cipher;
 
 	public function __construct()
 	{
 		parent::__construct(new AuthConfig());
 		$this->charset = "ABCDEFGHIJKLMNOPQRSTUVWXYZ234567";
-		#$this->db_cipher = "";
 	}
 
 	/**
@@ -87,7 +88,6 @@ class Authentication extends CS425Class
 	# endregion
 
 	# region Generate TOTP
-	# region I will not lie, I took some of this from https://github.com/lfkeitel/php-totp/blob/master/src/Hotp.php and made it work.
 	/**
 	 * Generates a Time based One Time Password (TOTP).
 	 *
@@ -122,13 +122,9 @@ class Authentication extends CS425Class
 		// Generate a normal HOTP token
 
 		$hex = str_pad(dechex($count), 16, "0", STR_PAD_LEFT);
-		$cmd = sprintf("echo -n \"0x%s\" | xxd -r -p | openssl dgst -%s -mac HMAC -macopt hexkey:%s",
-			$hex, $algo, $convert);
-		exec($cmd, $output, $retval);
+		$hash = hash_hmac($algo, hex2bin($hex), hex2bin($convert));
 
-		# $hash = hash_hmac($algo, $hex, $convert);
-
-		$code = $this->genHTOPValue(substr($output["0"], 13), $length);
+		$code = $this->genHTOPValue($hash, $length);
 
 		$code = str_pad((string)$code, $length, "0", STR_PAD_LEFT);
 		return substr($code, (-1 * $length));
@@ -204,12 +200,12 @@ class Authentication extends CS425Class
 	}
 
 	protected function decrypt($data, $cipher=null): string|false{ # TODO: If there is time, encrypt all of the secret keys in the database.
-		return false;#return openssl_decrypt($ciphertext, $cipher, $key, $options=0, $iv, $tag);
+		return false; // return openssl_decrypt($ciphertext, $cipher, $key, $options=0, $iv, $tag);
 	}
 	# endregion
 }
 
-#$totp = new Authentication();
-# echo $totp->GenerateToken("ACAHAACAAJGILAOC") . PHP_EOL;
-#echo $totp->generateQRCode("employee_username1","ACAHAACAAJGILAOC") . PHP_EOL;
-# echo $totp->GenerateToken("XE7ZREYZTLXYK444", 1632741679) . PHP_EOL;
+// $totp = new Authentication();
+// echo $totp->GenerateToken("ACAHAACAAJGILAOC") . PHP_EOL;
+// echo $totp->generateQRCode("employee_username1","ACAHAACAAJGILAOC") . PHP_EOL;
+// echo $totp->GenerateToken("XE7ZREYZTLXYK444", 1632741679) . PHP_EOL;
