@@ -9,8 +9,6 @@ include_once "CS425Class.php";
 require_once(dirname(__DIR__) . "/ConfigFiles/AuthConfig.php");
 require_once(dirname(__DIR__) . "/constants.php");
 
-require (dirname(__DIR__, 2) . "/vendor/autoload.php");
-
 class Authentication extends CS425Class
 {
 	private string $charset = "ABCDEFGHIJKLMNOPQRSTUVWXYZ234567";
