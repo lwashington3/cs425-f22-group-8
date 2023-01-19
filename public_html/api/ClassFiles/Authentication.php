@@ -13,12 +13,11 @@ require (dirname(__DIR__, 2) . "/vendor/autoload.php");
 
 class Authentication extends CS425Class
 {
-	protected string $charset;
+	private string $charset = "ABCDEFGHIJKLMNOPQRSTUVWXYZ234567";
 
 	public function __construct()
 	{
 		parent::__construct(new AuthConfig());
-		$this->charset = "ABCDEFGHIJKLMNOPQRSTUVWXYZ234567";
 	}
 
 	/**
@@ -45,29 +44,30 @@ class Authentication extends CS425Class
 		return in_array($authcode, $totps);
 	}
 
-	private function utf8_char_code_at($str, $index)
-	{
-		$char = mb_substr($str, $index, 1, 'UTF-8');
-		if (mb_check_encoding($char, 'UTF-8')) {
-			$ret = mb_convert_encoding($char, 'UTF-32BE', 'UTF-8');
-			return hexdec(bin2hex($ret));
-		} else {
-			return null;
+	/**
+	 * Creates a secret key for TOTP.
+	 * @param int $length The number of digits in the secret key
+	 * @return string
+	 * @throws Exception
+	 */
+	function createSecretKey(int $length=16): string {
+		$token = "";
+
+		for($i = 0; $i < $length; $i++){
+			$token .= substr($this->charset, random_int(0, strlen($this->charset)), 1);
 		}
+
+		return $token;
 	}
 
-	private function mapped($value){
-		$position = $this->utf8_char_code_at($this->charset, (int)floor((mb_ord($value, "UTF-8")*strlen($this->charset))/256));
-		return mb_chr($position);
-	}
-
-	public function createSecretKey($length=16){
-		$token = openssl_random_pseudo_bytes($length);
-		$array = array_map(array($this, "mapped"), str_split($token));
-		return join("", $array);
-	}
-
-	public function generateQRCode($username, $key, $length=6, $period=30){
+	/**
+	 * @param $username
+	 * @param $key
+	 * @param $length
+	 * @param $period
+	 * @return string
+	 */
+	public function generateQRUri($username, $key, $length=6, $period=30): string {
 		$cmd = sprintf("python3 %s/qr.py %s %s -d=%d -t=%d",
 			dirname(__FILE__), $key, $username, $length, $period);
 		exec($cmd, $output, $retval);

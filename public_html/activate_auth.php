@@ -9,7 +9,7 @@ $enable = isset($_GET["enable"]) && ($_GET["enable"] == "true");
 if($enable){
 	$auth = new Authentication();
 	$key = $auth->createSecretKey();
-	$qrcode = $auth->generateQRCode($username, $key);
+	$qrcode = $auth->generateQRUri($username, $key);
 	try {
 		$auth->setTOTP($username, $key);
 	} catch (PGException $e) {
