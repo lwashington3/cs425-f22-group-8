@@ -11,9 +11,6 @@ require_once(dirname(__DIR__) . "/constants.php");
 
 require (dirname(__DIR__, 2) . "/vendor/autoload.php");
 
-use chillerlan\QRCode\QRCode;
-use chillerlan\QRCode\QROptions;
-
 class Authentication extends CS425Class
 {
 	protected string $charset;
@@ -71,19 +68,10 @@ class Authentication extends CS425Class
 	}
 
 	public function generateQRCode($username, $key, $length=6, $period=30){
-		$data = sprintf("otpauth://totp/WCS%%20Banking:%s?secret=%s&issuer=WCS%%20Banking&digits=%d&period=%d",
-			$username, $key, $length, $period);
-		$options = new QROptions(
-			[
-				'eccLevel' => QRCode::ECC_L,
-				'outputType' => QRCode::OUTPUT_MARKUP_SVG,
-				'version' => 5,
-				'bgColor' => "transparent",
-
-			]
-		);
-		# http://www1.auth.iij.jp/smartkey/en/uri_v1.html
-		return (new QRCode($options))->render($data);  # TODO: Add logo (https://www.twilio.com/blog/create-qr-code-in-php)
+		$cmd = sprintf("python3 %s/qr.py %s %s -d=%d -t=%d",
+			dirname(__FILE__), $key, $username, $length, $period);
+		exec($cmd, $output, $retval);
+		return $output["0"];
 	}
 	# endregion
 
@@ -185,22 +173,6 @@ class Authentication extends CS425Class
 			$otps[] = $this->GenerateToken($key, $time + ($time_interval * $i), $length, $time_interval, $algo);
 		}
 		return $otps;
-	}
-	# endregion
-
-	# region Encryption/Decryption
-	protected function encrypt($data, $cipher=null): string|false{
-		if (!in_array($cipher, openssl_get_cipher_methods()))
-		{
-			return false;
-		}
-		$ivlen = openssl_cipher_iv_length($cipher);
-		$iv = openssl_random_pseudo_bytes($ivlen);
-		return openssl_encrypt($data, $cipher, $key, $options=0, $iv, $tag);
-	}
-
-	protected function decrypt($data, $cipher=null): string|false{ # TODO: If there is time, encrypt all of the secret keys in the database.
-		return false; // return openssl_decrypt($ciphertext, $cipher, $key, $options=0, $iv, $tag);
 	}
 	# endregion
 }
