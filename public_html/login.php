@@ -13,6 +13,7 @@ require_once "api/constants.php";
 	<link href="/css/navigation.css" type="text/css" rel="stylesheet"/>
 	<script type="text/javascript" src="/scripts/buttons.js"></script>
 	<script type="text/javascript" src="/scripts/join.js"></script>
+	<script type="text/javascript" src="/scripts/login.js"></script>
 	<script type="text/javascript">
 		function checkInfo(){
 			let username = document.getElementById("username");
@@ -42,13 +43,14 @@ require_once "api/constants.php";
 
 	<section class="form">
 	<div class="center">
-		<form name="form" id="form" action="/api/login.php" method="POST">
+		<form name="login_form" id="login_form" onclick="login()" method="POST">
 			<input type="text" id="username" name="username" value="" autocomplete="username" placeholder = "Username" oninput="checkInfo()" required>
 			<input type="password" id="password" name="password" value="" autocomplete="current-password" placeholder = "Password" oninput="checkInfo()" onkeyup="checkInfo()" required>
 			<input type="number" id="auth_code" name="auth_code" value="" placeholder = "2FA code"><br>
-			<button type="submit" name="submit" id="submit" form="form" hidden>Login</button>
+			<button type="submit" name="submit" id="submit" form="login_form" hidden>Login</button>
 			<p>Not with us yet?<a href="/signup.php"> Sign Up Here</a></p>
 		</form>
+		<div id="server_response" hidden></div>
 	</div>
 	</section>
 </body>

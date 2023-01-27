@@ -120,7 +120,7 @@ class DataBase extends CS425Class
 		if(!is_null($totp)){
 			$valid_code = $this->authenticator->checkTOTP($username, $authcode, false);
 			if(!$valid_code){
-				throw new InvalidArgumentException("Response: Invalid 2FA code.");
+				throw new InvalidArgumentException("Invalid 2FA code.");
 			}
 		}
 		# endregion
