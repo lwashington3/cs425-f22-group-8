@@ -89,15 +89,15 @@ require_once "api/constants.php";
 	<section class="form center">
 		<div class="center">
 			<fieldset>
-				<label for="username">Username</label>
+				<label for="username" class="form">Username</label>
 				<input type="text" id="username" name="username" value="" autocomplete="username" placeholder = "Username" oninput="checkUsername()" required>
 			</fieldset>
 			<fieldset>
-				<label for="password">Password</label>
+				<label for="password" class="form">Password</label>
 				<input type="password" id="password" name="password" value="" autocomplete="current-password" placeholder = "Password" oninput="checkInfo()" onkeyup="checkInfo()" required>
 			</fieldset>
 			<fieldset>
-				<label for="auth_code">2FA code</label>
+				<label for="auth_code" class="form">2FA code</label>
 				<input type="number" id="auth_code" name="auth_code" value="" placeholder="2FA code"><br>
 			</fieldset>
 

@@ -89,18 +89,6 @@ button:hover {
 	transition: 1s;
 }
 
-fieldset:invalid ~ fieldset {
-	display: none;
-}
-
-input,
-textarea {
-	box-sizing: border-box;
-	width: 100%;
-	font-family: monospace;
-	padding: 0.25em 0.5em;
-}
-
 /* ============================================================================================ */
 
 /* FOOTER STARTS HERE */
