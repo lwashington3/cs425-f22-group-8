@@ -102,12 +102,12 @@ require_once "api/constants.php";
 				<label for="auth_code" class="form">2FA code</label>
 				<div class="fas_container">
 					<div class="inputs" id="inputs">
-						<input maxlength="2" placeholder="•" value="" required>
-						<input maxlength="2" placeholder="•" value="" required>
-						<input maxlength="2" placeholder="•" value="" required>
-						<input maxlength="2" placeholder="•" value="" required>
-						<input maxlength="2" placeholder="•" value="" required>
-						<input maxlength="1" placeholder="•" value="" required>
+						<input type="number" maxlength="2" placeholder="•" value="" required>
+						<input type="number" maxlength="2" placeholder="•" value="" required>
+						<input type="number" maxlength="2" placeholder="•" value="" required>
+						<input type="number" maxlength="2" placeholder="•" value="" required>
+						<input type="number" maxlength="2" placeholder="•" value="" required>
+						<input type="number" maxlength="1" placeholder="•" value="" required>
 					</div>
 				</div>
 			</div>

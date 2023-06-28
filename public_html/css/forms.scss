@@ -37,8 +37,7 @@ fieldset:invalid ~ fieldset {
 	display: none;
 }
 
-input,
-textarea {
+input[type=text], input[type=password],textarea {
 	background: none;
 	color: $muted-color;
 	font-size: 18px;
