@@ -28,8 +28,9 @@ function login(){
 			let div = document.querySelector("div#server_response");
 			div.hidden = false;
 			div.value = req.getResponseHeader("Response");
+		} else{
+			window.location.href = req.getResponseHeader("Location");
 		}
-		console.log(req.getAllResponseHeaders());
 	}
 }
 

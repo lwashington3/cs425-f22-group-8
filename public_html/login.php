@@ -46,7 +46,9 @@ require_once "api/constants.php";
 		<input type="text" id="username" name="username" value="" autocomplete="username" placeholder = "Username" oninput="checkInfo()" required>
 		<input type="password" id="password" name="password" value="" autocomplete="current-password" placeholder = "Password" oninput="checkInfo()" onkeyup="checkInfo()" required>
 		<input type="number" id="auth_code" name="auth_code" value="" placeholder = "2FA code"><br>
-		<button type="submit" name="submit" id="submit" form="login_form" onclick="login()" hidden>Login</button>
+		<div class="" id="submit_wrapper">
+			<button type="submit" name="submit" id="submit" form="login_form" onclick="login()" hidden>Login</button>
+		</div>
 		<p>Not with us yet?<a href="/signup.php"> Sign Up Here</a></p>
 		<div id="server_response" hidden></div>
 	</div>
