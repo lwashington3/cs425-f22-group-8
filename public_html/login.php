@@ -17,6 +17,7 @@ require_once "api/constants.php";
 	<script type="text/javascript" src="/scripts/buttons.js"></script>
 	<script type="text/javascript" src="/scripts/join.js"></script>
 	<script type="text/javascript" src="/scripts/login.js"></script>
+	<script type="text/javascript" src="/scripts/auth.js"></script>
 	<script type="text/javascript">
 		function checkUsername(){
 			let username = document.getElementById("username");
