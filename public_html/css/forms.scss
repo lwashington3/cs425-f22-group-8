@@ -29,6 +29,10 @@ label.form {
 	transition: $trans-time ease all;
 }
 
+fieldset {
+	width: 0;
+}
+
 fieldset:invalid ~ fieldset {
 	display: none;
 }

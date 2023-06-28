@@ -23,6 +23,10 @@ label.form {
   transition: 300ms ease all;
 }
 
+fieldset {
+  width: 0;
+}
+
 fieldset:invalid ~ fieldset {
   display: none;
 }

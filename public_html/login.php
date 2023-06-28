@@ -13,6 +13,7 @@ require_once "api/constants.php";
 	<link href="/css/signup.css" type="text/css" rel="stylesheet"/>
 	<link href="/css/ring_indicator.css" type="text/css" rel="stylesheet"/>
 	<link href="/css/navigation.css" type="text/css" rel="stylesheet"/>
+	<link href="/css/auth.css" type="text/css" rel="stylesheet"/>
 	<script type="text/javascript" src="/scripts/buttons.js"></script>
 	<script type="text/javascript" src="/scripts/join.js"></script>
 	<script type="text/javascript" src="/scripts/login.js"></script>
@@ -98,7 +99,16 @@ require_once "api/constants.php";
 			</fieldset>
 			<fieldset>
 				<label for="auth_code" class="form">2FA code</label>
-				<input type="number" id="auth_code" name="auth_code" value="" placeholder="2FA code"><br>
+				<div class="fas_container">
+					<div class="inputs" id="inputs">
+						<input maxlength="2" placeholder="•" value="" required>
+						<input maxlength="2" placeholder="•" value="" required>
+						<input maxlength="2" placeholder="•" value="" required>
+						<input maxlength="2" placeholder="•" value="" required>
+						<input maxlength="2" placeholder="•" value="" required>
+						<input maxlength="1" placeholder="•" value="" required>
+					</div>
+				</div>
 			</fieldset>
 
 			<div class="" id="submit_wrapper">
