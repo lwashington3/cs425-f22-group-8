@@ -33,12 +33,14 @@ try{
 	<link rel="icon" type="image/x-icon" href="<?php echo FAVICON_LINK; ?>"/>
 	<link href="/css/wcss.php" type="text/css" rel="stylesheet"/>
 	<link href="/css/ring_indicator.css" type="text/css" rel="stylesheet"/>
+	<link href="/css/forms.css" type="text/css" rel="stylesheet"/>
 	<link href="/css/signup.css" type="text/css" rel="stylesheet"/>
 	<link href="/css/navigation.css" type="text/css" rel="stylesheet"/>
     <link href="/css/menu_style.css" type="text/css" rel="stylesheet"/>
     <link href="/css/back_button.css" type="text/css" rel="stylesheet"/>
     <script type="text/javascript" src="/scripts/buttons.js"></script>
     <script type="text/javascript" src="/scripts/join.js"></script>
+    <script type="text/javascript" src="/scripts/checks.js"></script>
 
 	<script type="text/javascript">
 		function onOpen(){
@@ -262,20 +264,20 @@ try{
 
 	<form name="signup_form" id="signup_form" action="/api/signup.php" method="POST" onsubmit="return validate()">
 		<input type="text" id="username" name="username" placeholder="Username" value="" oninput="checkInfo()" required autocomplete="username">
-		<div id="username_error" class="emsg"></div>
+		<div id="username_error" class="error-message"></div>
 		<input type="password" id="password" name="password" placeholder="Password" value="" oninput="checkInfo()" required autocomplete="new-password" minlength="8">
-		<div id="password_error" class="emsg"></div>
+		<div id="password_error" class="error-message"></div>
 
 		<input type="text" id="fullname" name="fullname" placeholder="Full Name" value="" oninput="checkInfo()" required autocomplete="name">
-		<div id="fullname_error" class="emsg"></div>
+		<div id="fullname_error" class="error-message"></div>
 		<input type="email" id="email" name="email" value="" placeholder="Email Address" oninput="checkInfo()" required autocomplete="email" pattern="^(([^<>()\[\]\\.,;:\s@]+(\.[^<>()\[\]\\.,;:\s@]+)*)|(.+))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$">
-		<div id="email_error" class="emsg"></div>
+		<div id="email_error" class="error-message"></div>
 		<input name="phone" id="phone" value="" type="tel" placeholder="Phone No." oninput="checkInfo()" required autocomplete="tel" pattern="\(?[0-9]{3}\)?-?[0-9]{3}-?[0-9]{4}">
-		<div id="phone_error" class="emsg"></div>
+		<div id="phone_error" class="error-message"></div>
 		<input class ="name-surname" type="number" id="address_number" name="address_number" placeholder="3301" oninput="checkInfo()" min="0" inputmode="decimal" required>
 		<input class ="name-surname" type="text" class="input1" id="direction" name="direction" pattern="[N|E|S|W]?" list="directions" placeholder="Direction">
-		<div id="address_number_error" class="emsg"></div>
-		<div id="direction_error" class="emsg"></div>
+		<div id="address_number_error" class="error-message"></div>
+		<div id="direction_error" class="error-message"></div>
 		<datalist id="directions">
 			<option>N</option>
 			<option>E</option>
@@ -283,9 +285,9 @@ try{
 			<option>W</option>
 		</datalist>
 		<input type="text" name="streetname" id="streetname" placeholder="Street Name" oninput="checkInfo()" required>
-		<div id="streetname_error" class="emsg"></div>
+		<div id="streetname_error" class="error-message"></div>
 		<input type="text" name="city" id="city" placeholder="City" oninput="checkInfo()" required>
-		<div id="city_error" class="emsg"></div>
+		<div id="city_error" class="error-message"></div>
 		<input class ="name-surname" name = "state" id="state" oninput="checkInfo()" list="states" placeholder="State" required>
 			<datalist id="states">
 				<?php foreach($states as $state) {?>
@@ -293,12 +295,12 @@ try{
 				<?php }?>
 			</datalist>
 		<input class ="name-surname" type="number" name="zipcode" id="zipcode" placeholder="Zipcode" oninput="checkInfo()" required min="10000" max="99999" autocomplete="postal-code" inputmode="decimal">
-		<div id="state_error" class="emsg"></div>
-		<div id="zipcode_error" class="emsg"></div>
+		<div id="state_error" class="error-message"></div>
+		<div id="zipcode_error" class="error-message"></div>
 		<input type="text" name="apt" id="apt" placeholder="Apt/Unit # (Optional)" value="">
-		<div id="apt_error" class="emsg"></div>
+		<div id="apt_error" class="error-message"></div>
 		<input name="branch" id="branch" oninput="checkInfo()" list="branches" placeholder="Branch" required>
-		<div id="branch_error" class="emsg"></div>
+		<div id="branch_error" class="error-message"></div>
 				<datalist id="branches">
 					<?php foreach($branches as $key => $value) { ?>
 						<option value="<?php echo $key?>"><?php echo $value ?></option>

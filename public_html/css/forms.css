@@ -1,0 +1,15 @@
+.center {
+  display: block;
+  width: 400px;
+  margin: 100px auto 60px;
+}
+
+section.form {
+  opacity: 1;
+  background-color: transparent;
+  padding: 20px;
+  text-align: center;
+  color: #cacaca;
+}
+
+/*# sourceMappingURL=forms.css.map */
