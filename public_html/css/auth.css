@@ -35,7 +35,7 @@ h1 {
   font-weight: 600;
 }
 
-.inputs, input {
+input.inputs {
   width: 50px;
   height: 60px;
   line-height: 100%;

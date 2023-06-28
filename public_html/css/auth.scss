@@ -39,7 +39,7 @@ h1 {
 	font-weight: 600;
 }
 
-.inputs, input {
+input.inputs {
 	width: #{$fontsize/(3/2)+10};
 	height: $fontsize;
 	line-height: 100%;
