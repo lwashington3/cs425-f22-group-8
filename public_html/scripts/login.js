@@ -10,7 +10,7 @@ function login_listener(){
 		return;
 	}
 
-	window.location = headers["location"];
+	//window.location = headers["location"];
 }
 
 function login(){
@@ -20,9 +20,17 @@ function login(){
 
 	const req = new XMLHttpRequest();
 	req.addEventListener("load", login_listener);
-	req.open("POST", "https://wcs.lenwashingtoniii.com/api/login.php");
+	req.open("POST", "https://wcs.lenwashingtoniii.com/api/login.php", true);
 	req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-	req.send(`username=${username}&password=${password}&auth_code=${auth_code}&submit=`);
+	req.send(`username=${username}&password=${password}&auth_code=${auth_code}`);
+	req.onreadystatechange = () => {
+		if(req.status >= 400){
+			let div = document.querySelector("div#server_response");
+			div.hidden = false;
+			div.value = req.getResponseHeader("Response");
+		}
+		console.log(req.getAllResponseHeaders());
+	}
 }
 
 function parse_response_headers(headers){

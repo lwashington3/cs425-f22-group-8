@@ -69,8 +69,8 @@ CREATE TABLE Account(
 CREATE TABLE Logins(
     id UUID REFERENCES Customers(id) ON DELETE CASCADE PRIMARY KEY ,
     username TEXT NOT NULL UNIQUE,
-    password TEXT NOT NULL,
-    totp_secret TEXT DEFAULT NULL
+        password TEXT NOT NULL,
+        totp_secret TEXT DEFAULT NULL
 );
 
 
