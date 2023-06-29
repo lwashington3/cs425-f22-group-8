@@ -31,7 +31,7 @@ try{
 	<meta charset="UTF-8">
 	<title>WCS Account Signup</title>
 	<link rel="icon" type="image/x-icon" href="<?php echo FAVICON_LINK; ?>"/>
-	<link href="/css/wcss.php" type="text/css" rel="stylesheet"/>
+	<link href="/css/wcss.css" type="text/css" rel="stylesheet"/>
 	<link href="/css/ring_indicator.css" type="text/css" rel="stylesheet"/>
 	<link href="/css/signup.css" type="text/css" rel="stylesheet"/>
 	<link href="/css/navigation.css" type="text/css" rel="stylesheet"/>
