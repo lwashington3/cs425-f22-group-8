@@ -1,0 +1,69 @@
+$background_color: "#171717ff";
+$basic_color: "#e6e6e4ff";
+$accent_color: "#449981ff";
+$nice_gray: "#1d272fff";
+
+body {
+	 background-color: $background_color;
+ }
+
+h1 {
+	color: $accent_color;
+	font-family: 'Pepsi Cyr-Lat', sans-serif;
+	text-align: center;
+	letter-spacing: 4px;
+	word-spacing: 3px;
+	font-size: 45px;
+}
+
+h2 {
+	color: $accent_color;
+	text-align: center;
+}
+
+h3 {
+	color: $accent_color;
+}
+
+h4 {
+	color: $accent_color;
+}
+
+h5 {
+	color: $accent_color;
+}
+
+h6 {
+	color: $accent_color;
+}
+
+p, code {
+	color: $basic_color;
+}
+
+label {
+	color: $basic_color;
+}
+
+table .profile_info {
+	font-family: arial, sans-serif;
+	border-collapse: collapse;
+	width: 100%;
+}
+
+.profile_info td, th {
+	border: 1px solid $accent_color;
+	text-align: left;
+	padding: 8px;
+	color: $basic_color;
+}
+
+.profile_info tr:nth-child(even) {
+	background-color: $accent_color;
+}
+
+#theDiv{
+	width: 900px;
+	border: solid $accent_color 2px;
+	margin: 0 0.5em;
+}

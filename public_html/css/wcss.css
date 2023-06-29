@@ -1,0 +1,66 @@
+body {
+  background-color: "#171717ff";
+}
+
+h1 {
+  color: "#449981ff";
+  font-family: "Pepsi Cyr-Lat", sans-serif;
+  text-align: center;
+  letter-spacing: 4px;
+  word-spacing: 3px;
+  font-size: 45px;
+}
+
+h2 {
+  color: "#449981ff";
+  text-align: center;
+}
+
+h3 {
+  color: "#449981ff";
+}
+
+h4 {
+  color: "#449981ff";
+}
+
+h5 {
+  color: "#449981ff";
+}
+
+h6 {
+  color: "#449981ff";
+}
+
+p, code {
+  color: "#e6e6e4ff";
+}
+
+label {
+  color: "#e6e6e4ff";
+}
+
+table .profile_info {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.profile_info td, th {
+  border: 1px solid "#449981ff";
+  text-align: left;
+  padding: 8px;
+  color: "#e6e6e4ff";
+}
+
+.profile_info tr:nth-child(even) {
+  background-color: "#449981ff";
+}
+
+#theDiv {
+  width: 900px;
+  border: solid "#449981ff" 2px;
+  margin: 0 0.5em;
+}
+
+/*# sourceMappingURL=wcss.css.map */
